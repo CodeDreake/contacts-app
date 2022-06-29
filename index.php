@@ -1,14 +1,9 @@
 <?php
-$contacts = [
-  ["name" => "Juan", "phone_number" => "21432534"],
-  ["name" => "Dilan", "phone_number" => "21575785"],
-  ["name" => "David", "phone_number" => "21423452"],
-  ["name" => "Jhon", "phone_number" => "21474574"],
-  ["name" => "Naty", "phone_number" => "21134235"],
-  ["name" => "Martha", "phone_number" => "224125"],
-  ["name" => "Einar", "phone_number" => "2234235"],
-  ["name" => "Fernanda", "phone_number" => "2754553"],
-]
+  if (file_exists("contacts.json")){
+    $contacts = json_decode(file_get_contents("contacts.json"), true);
+  }else {
+    $contacts = [];
+  }
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +51,10 @@ $contacts = [
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="./index.html">Home</a>
+            <a class="nav-link" href="./index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="add.html">Add Contact</a>
+            <a class="nav-link" href="add.php">Add Contact</a>
           </li>
         </ul>
       </div>
@@ -68,20 +63,30 @@ $contacts = [
 
   <main>
     <div class="container pt-4 p-3">
-      <div class="row">
-        <?php
-        foreach ($contacts as $contacts){?>
-        <div class="col-md-4 mb-3">
-          <div class="card text-center">
-            <div class="card-body">
-              <h3 class="card-title text-capitalize"><?= $contacts["name"] ?></h3>
-              <p class="m-2"><?= $contacts["phone_number"] ?></p>
-              <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
-              <a href="#" class="btn btn-danger mb-2">Delete Contact</a>
+    <div class="row">
+
+        <?php if (count($contacts)==0): ?>
+          <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+              <p>No contacts saved yet</p>
+              <a href="./add.php">Add One!</a>
             </div>
           </div>
-        </div>
-        <?php } ?>
+        <?php endif ?>
+
+        <?php foreach ($contacts as $contact): ?>
+          <div class="col-md-4 mb-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <h3 class="card-title text-capitalize"><?= $contact["name"] ?></h3>
+                <p class="m-2"><?= $contact["phone_number"] ?></p>
+                <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
+                <a href="#" class="btn btn-danger mb-2">Delete Contact</a>
+              </div>
+            </div>
+          </div>
+        <?php endforeach ?>
+
       </div>
     </div>
   </main>
