@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS contacts_app;
+-- DROP DATABASE IF EXISTS contacts_app;
 
 CREATE DATABASE contacts_app;
 
